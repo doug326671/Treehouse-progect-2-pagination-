@@ -14,17 +14,11 @@ FSJS project 2 - List Filter and Pagination
 //When the search button is pressed, the results should show up.
 //Pagination links should update depending on the number of search results. 
 
-//get all list item elements in the html document
 
 const allStudents = document.querySelectorAll(".student-item");
 const allStudentsArray = Array.prototype.slice.call(allStudents);
 var page = 1; // list of ten students
 const totalLength = allStudents.length;
-var newArray = [];
-
-var tenStudents = allStudentsArray.slice(0,10);
-  
-  //tenStudents.style.display = 'block';
   
   
 
@@ -50,11 +44,6 @@ const showPage = (allStudents,page) => {
     var newArray = allStudentsArray.slice(decidingPage,endOfTen);
   console.log(newArray);
   }
-
-  
-
-  // var listOfTen = newArray.slice(decidingPage,endOfTen);
-  // console.log(listOfTen.slice(decidingPage,endOfTen));
   
   // hides all the students except ten
     for(let i = 0; i < allStudentsArray.length; i++){ 
@@ -81,7 +70,7 @@ const appendPageLinks = (allStudentsArray) => {
   console.log(students);
   let howManyPages = Math.ceil(students / 10);
   console.log(howManyPages);
-
+//creates an li 
   var newDiv = document.createElement('div');
   newDiv.setAttribute('class', "pagination");
   var endOfPage = document.querySelector('.page')//so button are on page bottom
@@ -92,53 +81,35 @@ const appendPageLinks = (allStudentsArray) => {
   newLi.setAttribute('a', '');
   newLi.setAttribute('class', 'active');
   
+  //loops over the li to see how many pages need to be created
   for(let i = 1; i<howManyPages; i++){
     var newLi = document.createElement('li');
-    newLi.setAttribute('a', '');
-    newLi.setAttribute('class', 'active');
-    newLi.setAttribute('href', '#');
-    newLi.setAttribute('id', [i]);
-    newLi.innerHTML = [i];
+    var setTheTag = document.createElement('a');
+    setTheTag.setAttribute('href', '#');
+    newLi.appendChild(setTheTag);
     newUl.appendChild(newLi);
-
-    
-
-
-    //put a click event handler on li tags
-    document.querySelector('.pagination').addEventListener('click', (e) => {
-      var anchor = event.target.id;
-      //var pageNumbers = document.getElementById('anchor');
-      console.log(anchor);  
+    setTheTag.innerHTML = [i];
+    console.log(newLi);
       
-        if(anchor){
-         showPage(students,anchor);
-        }
-  
+  }
+  //puts the active on whatever element is clicked to display the correct students.
+   document.querySelector('.pagination').addEventListener('click', (e) => {
+        var anchor = e.target.innerHTML;
+        console.log(anchor);
+      if(anchor){
+         setTheTag.setAttribute('class', 'active');
+         setTheTag.setAttribute('class', '');
+        showPage(students,anchor);
+      }
+
     });
+  
   }
 
   
   
-}
+
 
 appendPageLinks(allStudentsArray);
 
 
-
-// var lastStudent = allStudents[allStudents.length - 1]; //last student
-// console.log(lastStudent);
-
-
-// var showFirstTen = (allStudents) =>{
-  
-//   for(let i = 10; i < allStudents.length; i++){  
-//     if(allStudents[i]<10){
-//         allStudents[i].style.display = 'block';
-//     }else{
-//         allStudents[i].style.display = 'none';
-//     }
-//   }
-//   return allStudents[i];
-  
-// }
-// showFirstTen(allStudents);
